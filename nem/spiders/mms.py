@@ -1,3 +1,4 @@
+# import logging
 from datetime import datetime
 from io import BytesIO
 from typing import Dict, Generator
@@ -5,12 +6,12 @@ from zipfile import ZipFile
 
 import scrapy
 from dateutil.rrule import MONTHLY
-from scrapy import shell
 from nem.utils.handlers import _handle_zip, chain_streams
 from nem.utils.mime import mime_from_content, mime_from_url, decode_bytes
 from nem.utils.dates import date_iso_str, date_series
 from nem.pipelines import ExtractCSV
 
+# logger = logging.getLogger('mms_dispatch')
 
 MMS_URL = 'http://nemweb.com.au/Data_Archive/Wholesale_Electricity/MMSDM/{year}/MMSDM_{year}_{month}/MMSDM_Historical_Data_SQLLoader/DATA/PUBLIC_DVD_{table}_{year}{month}010000.zip'
 
@@ -42,7 +43,9 @@ class mms_dispatch(scrapy.Spider):
 
 
     def parse(self, response) -> Generator[Dict, None, None]:
-        
+
+        self.logger.info("running mms_spider parse")
+
         if self.shell_obj_response:
             from scrapy.shell import inspect_response
             inspect_response(response, self)

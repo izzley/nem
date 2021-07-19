@@ -1,3 +1,7 @@
+'''
+This module is not called anywhere within nem source code.
+'''
+
 from datetime import datetime
 from io import BytesIO
 from typing import Dict, Generator
@@ -151,3 +155,6 @@ def process_item(item):
             table["records"].append(record)
 
     return item
+
+# item = parse(response)
+# csv_item = process_item(item)
