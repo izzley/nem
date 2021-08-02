@@ -2,6 +2,7 @@
 This module is not called anywhere within nem source code.
 '''
 
+import logging
 from datetime import datetime
 from io import BytesIO
 from typing import Dict, Generator
@@ -16,6 +17,7 @@ from nem.utils.mime import mime_from_content, mime_from_url, decode_bytes
 from nem.utils.dates import date_iso_str, date_series
 from nem.pipelines import ExtractCSV
 
+logger = logging.getLogger("EXTRACT_CSV")
 
 MMS_URL = 'http://nemweb.com.au/Data_Archive/Wholesale_Electricity/MMSDM/{year}/MMSDM_{year}_{month}/MMSDM_Historical_Data_SQLLoader/DATA/PUBLIC_DVD_{table}_{year}{month}010000.zip'
 
@@ -45,7 +47,7 @@ def start_requests(self):
         yield scrapy.Request(req_url, callback=parse)
 
 
-def parse(response) -> Generator[Dict, None, None]:
+def parse(response) -> dict:
 
     content = None
 
@@ -115,16 +117,30 @@ def process_item(item):
     datacsv = csv.reader(content_split)
 
     for row in datacsv:
+        # skip empty rows, non-list or 
         if not row or type(row) is not list or len(row) < 1:
             continue
 
         record_type = row[0]
 
         if record_type == "C":
+            # example C data:
+            # ['C',
+            # 'SETP.WORLD',
+            # 'DVD_DISPATCH_UNIT_SCADA',
+            # 'AEMO',
+            # 'PUBLIC',
+            # '2021/07/12',
+            # '13:10:04',
+            # '0000000345345217',
+            # '',
+            # '0000000345345170']
+
             # @TODO csv meta stored in table
+            # table["name"] is None until picked up from "I" row
             if table["name"] is not None:
                 table_name = table["name"]
-
+                # ???
                 if table_name in item["tables"]:
                     item["tables"][table_name]["records"] += table[
                         "records"
@@ -133,6 +149,7 @@ def process_item(item):
                     item["tables"][table_name] = table
 
         elif record_type == "I":
+            # I info record at start
             if table["name"] is not None:
                 table_name = table["name"]
 
@@ -149,6 +166,7 @@ def process_item(item):
             table["records"] = []
 
         elif record_type == "D":
+            # Example data: ['D', 'DISPATCH', 'UNIT_SCADA', '1', '2021/06/01 00:05:00', 'BARCSF1', '0.10']
             values = row[4:]
             record = dict(zip(table["fields"], values))
 
@@ -156,5 +174,28 @@ def process_item(item):
 
     return item
 
-# item = parse(response)
+
+def Extract_CSV_BRISKET(response):
+    """
+    disect ExtractCSV function like a lamb shank
+    """
+    item = parse(response)
+    content = item["content"]
+    logger.info(
+        f"\ntype(item['content']) == {type(content)}\n"
+        "Use new lines in string to split lines into list of rows"
+        )
+
+    content_split = content.splitlines()
+    logger.info(
+        f"type(content_split) == {type(content_split)}"
+        )
+    # csv.reader returns a generator which means once iterated
+    # the output is not stored in memory. eg datacsv.__next__()
+    datacsv = csv.reader(content_split)
+
+    # check:
+    # if not row a row exists, 
+    return None
+
 # csv_item = process_item(item)

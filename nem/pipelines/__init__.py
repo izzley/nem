@@ -1,6 +1,7 @@
 import csv
 import logging
 import zipfile
+import time
 
 from nem.utils.pipelines import check_spider_pipeline
 
@@ -34,18 +35,27 @@ class ExtractCSV(object):
             record_type = row[0]
 
             if record_type == "C":
+                print("processing record C\n")
                 # @TODO csv meta stored in table
                 if table["name"] is not None:
                     table_name = table["name"]
-
+                    print(table['name'])
+                    time.sleep(4)
                     if table_name in item["tables"]:
                         item["tables"][table_name]["records"] += table[
                             "records"
                         ]
+                        print(table_name)
+                        print(item['tables'])
+                        time.sleep(4)
                     else:
                         item["tables"][table_name] = table
+                        print(table_name)
+                        print(item['tables'])
+                        time.sleep(4)
 
             elif record_type == "I":
+                print("processing record I\n")
                 if table["name"] is not None:
                     table_name = table["name"]
 
@@ -53,6 +63,12 @@ class ExtractCSV(object):
                         item["tables"][table_name]["records"] += table[
                             "records"
                         ]
+                        print(f"table_name in item[tables]: {table_name} -- {item['tables']}")
+                        time.sleep(4)
+                        print(item["tables"][table_name]["records"])
+                        time.sleep(4)
+                        print(table["records"])
+                        time.sleep(4)
                     else:
                         item["tables"][table_name] = table
 
@@ -60,11 +76,14 @@ class ExtractCSV(object):
                 table["name"] = "{}_{}".format(row[1], row[2])
                 table["fields"] = fields = row[4:]
                 table["records"] = []
+                print(table["name"])
+                print(table["fields"])
+                print(table["records"])
+                time.sleep(4)
 
             elif record_type == "D":
                 values = row[4:]
                 record = dict(zip(table["fields"], values))
-
                 table["records"].append(record)
 
         return item

@@ -3,6 +3,7 @@ from datetime import datetime
 from io import BytesIO
 from typing import Dict, Generator
 from zipfile import ZipFile
+import re
 
 import scrapy
 from dateutil.rrule import MONTHLY
@@ -23,19 +24,20 @@ class mms_dispatch(scrapy.Spider):
     # interactive shell of spider parse response
     # https://docs.scrapy.org/en/latest/topics/shell.html#invoking-the-shell-from-spiders-to-inspect-responses
     # Let shell_obj_response = True to enable
-    shell_obj_response = True
-
-    # pipelines = set([ExtractCSV])
+    shell_obj_response = False
+    
+    pipelines = set([ExtractCSV])
 
     def start_requests(self):
-        start_date = datetime(2021, 6, 1)
-        end_date = datetime(2021, 7, 1)
+        start_date = datetime(2021, 4, 1)
+        end_date = datetime(2021, 6, 1)
         for date in date_series(start_date, end_date, _freq=MONTHLY):
             url_params = {
                 'year': date.strftime('%Y'),
                 'month': date.strftime('%m'),
                 'table': self.table,
             }
+
 
             req_url = MMS_URL.format(**url_params)
             
@@ -87,5 +89,6 @@ class mms_dispatch(scrapy.Spider):
         item["content"] = content_decoded
         item["extension"] = ".csv"
         item["mime_type"] = file_mime
+        # item["log_name"] = re.findall('DATA/(.*).zip', response.url)[0]
 
         yield item

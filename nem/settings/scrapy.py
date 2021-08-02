@@ -10,7 +10,6 @@ BOT_NAME = 'nem'
 SPIDER_MODULES = ['nem.spiders']
 NEWSPIDER_MODULE = 'nem.spiders'
 
-
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'nem (+http://www.yourdomain.com)'
 
@@ -63,6 +62,54 @@ ROBOTSTXT_OBEY = True
 ITEM_PIPELINES = {
     'nem.pipelines.ExtractCSV': 300,
 }
+
+# Log settings 
+# See https://doc.scrapy.org/en/latest/topics/settings.html#std-setting-LOG_FILE
+
+LOG_ENABLED = True
+# Default: True
+# Whether to enable logging.
+
+LOG_ENCODING = 'utf-8'
+# Default: 'utf-8'
+# The encoding to use for logging.
+
+# LOG_FILE = "scrapylog.txt"
+# Default: None
+# File name to use for logging output. If None, standard error will be used.
+
+# LOG_FORMAT
+# Default: '%(asctime)s [%(name)s] %(levelname)s: %(message)s'
+# String for formatting log messages. 
+# Refer to the Python logging documentation for the qwhole list of available placeholders.
+
+# LOG_DATEFORMAT
+# Default: '%Y-%m-%d %H:%M:%S'
+# String for formatting date/time, expansion of the %(asctime)s placeholder in LOG_FORMAT. 
+# Refer to the Python datetime documentation for the whole list of available directives.
+
+# LOG_FORMATTER
+# Default: scrapy.logformatter.LogFormatter
+# The class to use for formatting log messages for different actions.
+
+# LOG_LEVEL
+# Default: 'DEBUG'
+# Minimum level to log. Available levels are: CRITICAL, ERROR, WARNING, INFO, DEBUG. 
+# For more info see Logging.
+
+# LOG_STDOUT
+# Default: False
+# If True, all standard output (and error) of your process will be redirected to the log. 
+# For example if you print('hello') it will appear in the Scrapy log.
+
+# LOG_SHORT_NAMES
+# Default: False
+# If True, the logs will just contain the root path. 
+# If it is set to False then it displays the component responsible for the log output
+
+# LOGSTATS_INTERVAL
+# Default: 60.0
+# The interval (in seconds) between each logging printout of the stats by LogStats.
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
