@@ -3,3 +3,9 @@
 
 # scrapy
 .scrapy*
+
+# ignore caches
+*__pycache__*
+
+# .vscode
+.vscode
