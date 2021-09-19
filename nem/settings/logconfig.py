@@ -8,6 +8,10 @@ import yaml
 from nem.settings import config_dict
 from pathlib import Path
 
+# NOTE: should be logging.config.fileconfig rather than custom class instance
+# how to dynamically reference logconfig.yaml without being cumbersome
+# https://docs.python.org/3/library/logging.config.html#logging.config.dictConfig
+
 class LoggingDict:
     """
     Read logconfig.yaml file in settings

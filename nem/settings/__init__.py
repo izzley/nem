@@ -1,10 +1,12 @@
 from configparser import ConfigParser, SectionProxy
+from logging import config
 from typing import Dict
 from pathlib import Path
 
 # filepath to .ini file for auth credentials
 p = Path('.') / 'nem/settings/nem.ini'
 config_path = p.absolute()
+print(config_path)
 
 def config_dict(filename: Path = config_path, section: str = None) -> Dict:
     """

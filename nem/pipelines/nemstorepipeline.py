@@ -1,15 +1,35 @@
-from typing import Any, Dict, List, Optional
 import logging
-from nem.settings import logconfig
-from nem.utils.pipelines import check_spider_pipeline
+import logging.config
+from typing import Any, Dict, List, Optional
+
+from nem.settings import config_dict
 from nem.settings.logconfig import LoggingDict
+from nem.utils.pipelines import check_spider_pipeline
 
-# configure logger
+# logging.config.fileConfig("~/repos/nem/nem/settings/logconfig.yaml")
 LoggingDict().readyaml()
-
 logger = logging.getLogger(__name__)
 
-logger.debug("whatup")
+
+def process_unit_scada(table: Dict[str, Any], spider: Spider) -> Dict:
+    if "records" not in table:
+        raise Exception("Invalid table no records")
+
+    records = table["records"]
+    item: Dict[str, Any] = dict()
+
+    item["table_schema"] = FacilityScada
+    item["update_fields"] = ["generated"]
+    item["records"] = unit_scada_generate_facility_scada(
+        records,
+        spider,
+        power_field="SCADAVALUE",
+        network=NetworkNEM,
+        date_format="%Y/%m/%d %H:%M:%S",
+    )
+    item["content"] = ""
+
+    return item
 
 
 TABLE_PROCESSOR_MAP = {
@@ -33,7 +53,7 @@ class NemwebUnitScadaOpenNEMStorePipeline(object):
             msg = "NemwebUnitScadaOpenNEMStorePipeline"
             if spider and hasattr(spider, "name"):
                 msg = spider.name
-            Logger.error("No item in pipeline: {}".format(msg))
+            logger.error("No item in pipeline: {}".format(msg))
             return {}
 
         if "tables" not in item:
