@@ -1,8 +1,16 @@
-import logging
 from typing import Any, Dict, List, Optional
+import logging
+from nem.settings import logconfig
 from nem.utils.pipelines import check_spider_pipeline
+from nem.settings.logconfig import LoggingDict
+
+# configure logger
+LoggingDict().readyaml()
 
 logger = logging.getLogger(__name__)
+
+logger.debug("whatup")
+
 
 TABLE_PROCESSOR_MAP = {
     "DISPATCH_CASE_SOLUTION": "process_case_solutions",

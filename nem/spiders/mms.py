@@ -16,7 +16,7 @@ from nem.pipelines import ExtractCSV
 
 MMS_URL = 'http://nemweb.com.au/Data_Archive/Wholesale_Electricity/MMSDM/{year}/MMSDM_{year}_{month}/MMSDM_Historical_Data_SQLLoader/DATA/PUBLIC_DVD_{table}_{year}{month}010000.zip'
 
-class mms_BULKSPIDER(scrapy.Spider):
+class MMSArchiveBulkSpider(scrapy.Spider):
 
     name = 'mms_dispatch'
     table = 'DISPATCH_UNIT_SCADA'

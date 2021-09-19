@@ -1,5 +1,5 @@
 
-rom decimal import Decimal
+from decimal import Decimal
 from typing import List, Optional
 
 from dictalchemy import DictableModel

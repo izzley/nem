@@ -2,10 +2,10 @@ import csv
 import logging
 import zipfile
 import time
-
+from nem.settings import logconfig
 from nem.utils.pipelines import check_spider_pipeline
 
-logger = logging.getLogger(__name__)
+logger = logconfig.logging.getLogger(__name__)
 
 class ExtractCSV(object):
     @check_spider_pipeline
