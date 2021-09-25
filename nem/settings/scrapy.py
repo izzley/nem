@@ -1,3 +1,7 @@
+import logging
+from nem.settings import LOGGING_CONFIG, config_dict
+
+logger = logging.getLogger(__name__)
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
 #
@@ -12,6 +16,23 @@ NEWSPIDER_MODULE = 'nem.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'nem (+http://www.yourdomain.com)'
+
+# database credentials
+DB = config_dict(section='DATABASE')
+
+DRIVER = DB['drivername']
+USER = DB['username']
+PASS = DB['password']
+HOST = DB['host']
+PORT = DB['port']
+DBASE = DB['database']
+
+for elem in DB:
+    if not DB[elem]:
+        logger.error("DATABASE details missing: {}".format(elem))
+
+# databse url string
+db_string = f"{DRIVER}://{USER}:{PASS}@{HOST}:{PORT}/{DB}"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
