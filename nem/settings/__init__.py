@@ -1,12 +1,29 @@
 from configparser import ConfigParser, SectionProxy
 from logging import config
-from typing import Dict
+from typing import Dict, Optional
 from pathlib import Path
+from pkgutil import get_data
+import yaml
+import logging
 
+# setup root logger
+def logroot() -> Optional[dict]:
+    # path to yaml from project root
+    logyaml = get_data("nem", "settings/logconfig.yaml")
+    config = yaml.safe_load(logyaml)
+    # create logger instance
+    logging.config.dictConfig(config)
+
+    return config
+
+LOGGING_CONF = logroot()
+
+__root_logger = logging.getLogger("Settings")
 # filepath to .ini file for auth credentials
 p = Path('.') / 'nem/settings/nem.ini'
 config_path = p.absolute()
-print(config_path)
+if not p.exists():
+    l
 
 def config_dict(filename: Path = config_path, section: str = None) -> Dict:
     """
@@ -23,6 +40,33 @@ def config_dict(filename: Path = config_path, section: str = None) -> Dict:
     params = parser.items(section)
     return {param[0]: param[1] for param in params}
 
-if __name__ == '__main__':
-    print(p)
-    print(config_dict(section="FILEPATHS"))
+def logroot() -> Optional[dict]:
+    # path to yaml from project root
+    logyaml = get_data("nem", "settings/logconfig.yaml")
+    config = yaml.safe_load(logyaml)
+    # create logger instance
+    logging.config.dictConfig(config)
+    return config
+
+LOGGING_CONF = logroot()
+
+
+# # skip if the current cli is scrapy
+# if LOGGING_CONFIG and not running_as_scrapy():
+#     # don't mess with scrapy logging
+
+#     logging.config.dictConfig(LOGGING_CONFIG)
+
+#     log_level = logging.getLevelName(settings.log_level)
+
+#     # set root log level
+#     logging.root.setLevel(log_level)
+
+#     opennem_logger = logging.getLogger("opennem")
+#     opennem_logger.setLevel(log_level)
+
+#     # other misc loggers
+#     logging.getLogger("PIL").setLevel(logging.ERROR)
+# if __name__ == '__main__':
+#     print(p)
+#     print(config_dict(section="FILEPATHS"))

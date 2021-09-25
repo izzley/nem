@@ -131,3 +131,10 @@ HTTPCACHE_ENABLED = True
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+import logging
+from nem.settings.logconfig import RootLoggerConf
+
+logger = logging.getLogger(__name__)
+
+logger.debug("scrapy log")
