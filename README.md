@@ -1,3 +1,5 @@
+# nem
+=======
 ## nem
 
 scrapy project to wrangle electricity grid data
@@ -63,3 +65,4 @@ Overview of scrapy architecture:
 
 ![](https://docs.scrapy.org/en/latest/_images/scrapy_architecture_02.png)
 
+>>>>>>> nemwebstore
