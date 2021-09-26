@@ -2,14 +2,10 @@ import logging
 import logging.config
 from typing import Any, Dict, List, Optional
 from scrapy import Spider
-
-from nem.settings import config_dict
-from nem.settings.logconfig import LoggingDict
 from nem.db.models.nemstore import FacilityScada
 from nem.utils.pipelines import check_spider_pipeline
 
 # logging.config.fileConfig("~/repos/nem/nem/settings/logconfig.yaml")
-LoggingDict().readyaml()
 logger = logging.getLogger(__name__)
 
 def unit_scada_generate_facility_scada(
@@ -260,3 +256,6 @@ class NemwebUnitScadaOpenNEMStorePipeline(object):
                 ret.append(record_item)
 
         return ret
+
+if __name__ == "__main__":
+    logger.debug("test")

@@ -17,7 +17,7 @@ handlers:
     info_file_handler:
         class: logging.handlers.RotatingFileHandler
         level: INFO
-        filters: [infoFilter]
+        # filters: [infoFilter]
         formatter: standard
         filename: /home/izzlee/repos/nem/nem/debugfiles/info.log
         maxBytes: 10485760 # 10MB
@@ -60,9 +60,11 @@ handlers:
         backupCount: 20
         encoding: utf8
 
-filters:
-  infoFilter:
-    (): __main__.infoFilter
+# @TODO:add filter to logger
+# filters:
+#   infoFilter:
+#     (): __main__.infoFilter
+
 # sampleLogger:
 #     level: DEBUG
 #     handlers: [console, info_file_handler, error_file_handler, critical_file_handler, debug_file_handler, warn_file_handler]

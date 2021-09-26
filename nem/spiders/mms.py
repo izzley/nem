@@ -100,7 +100,7 @@ class MMSArchivePriceSpider(MMSArchiveBulkSpider):
     pipelines = set(
         [
             ExtractCSV,
-            NemwebUnitScadaOpenNEMStorePipeline,
+            # NemwebUnitScadaOpenNEMStorePipeline,
         ]
     )
 
