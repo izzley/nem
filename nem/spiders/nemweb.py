@@ -1,8 +1,5 @@
 """
-NEM Base Nemweb Spider
-
-
-This is the base nemweb spider that all the other spiders inherit from. It
+NEM Base Nemweb Spider is the base nemweb spider that all the other spiders inherit from. It
 simply sets up the allowed domain and the default pipelines applied.
 
 
@@ -26,7 +23,6 @@ class NemwebLatestDispatchScada(NemwebSpider):
     start_url = "http://www.nemweb.com.au/Reports/CURRENT/Dispatch_SCADA/"
     limit = 3
 
-    def parse(self, reponse) -> Generator(Dict):
         
 
     # pipelines_extra = set(

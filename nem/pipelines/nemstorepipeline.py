@@ -217,7 +217,7 @@ class NemwebUnitScadaOpenNEMStorePipeline(object):
                 msg = spider.name
             logger.error("No item in pipeline: {}".format(msg))
             return {}
-
+        
         if "tables" not in item:
             print(item)
             raise Exception("Invalid item - no tables located")
