@@ -2,9 +2,10 @@
 =======
 ## nem
 
-scrapy project to wrangle electricity grid data
+This is a personal scrapy project to wrangle electricity grid data relating to Australia.
 
 **NOTE: This is a scraping project which uses pythons open source [Scrapy Architecture](https://scrapy.org/)**
+The methods and approach I've used is almost entirely thanks to the amazing open source tool [opennem](https://opennem.org.au/energy/nem). The backend schema and scraping methods are fast, scaleable and transferrable to other scraping projects using scrapy.
 
 Currently supports:
 

@@ -1,7 +1,7 @@
 import logging
-from nem.settings import LOGGING_CONFIG, config_dict
+from nem.settings import config_dict
 
-logger = logging.getLogger(__name__)
+# logger = logging.getLogger(__name__)
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
 #
@@ -29,7 +29,7 @@ DBASE = DB['database']
 
 for elem in DB:
     if not DB[elem]:
-        logger.error("DATABASE details missing: {}".format(elem))
+        logging.error("DATABASE details missing: {}".format(elem))
 
 # databse url string
 db_string = f"{DRIVER}://{USER}:{PASS}@{HOST}:{PORT}/{DB}"
@@ -153,9 +153,6 @@ HTTPCACHE_ENABLED = True
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-import logging
-from nem.settings.logconfig import RootLoggerConf
-
-logger = logging.getLogger(__name__)
-
-logger.debug("scrapy log")
+if __name__ == "__main__":
+    logging.debug("dont print me")
+    logging.info("An INFO example")

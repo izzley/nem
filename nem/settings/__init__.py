@@ -7,18 +7,18 @@ from nem.utils.proc import running_as_scrapy
 import yaml
 import logging
 
+
 # setup root logger
 def logroot() -> Optional[dict]:
     """
     Logger instance from yaml file
+    https://kingspp.github.io/design/2017/11/06/the-head-and-tail-of-logging.html
     """
     # path to yaml from project root
     logyaml = get_data("nem", "settings/logconfig.yaml")
     config = yaml.safe_load(logyaml)
     # create logger instance
     logging.config.dictConfig(config)
-
-    return config
 
 LOGGING_CONFIG = logroot()
 

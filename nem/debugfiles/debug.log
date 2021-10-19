@@ -1,0 +1,2 @@
+2021-09-25 19:00:04,843 DEBUG - [test.py: line 7] - <module> - test
+2021-09-25 19:31:45,822 ERROR - [scrapy.py: line 32] - <module> - DATABASE details missing: database
