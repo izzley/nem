@@ -128,8 +128,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 =======
-# venv
-.venv
+# all venv python versions eg .venv395 indicates python version 3.9.5
+.venv*
 
 # scrapy
 .scrapy*
@@ -142,4 +142,3 @@ dmypy.json
 
 # INI files
 *.ini
->>>>>>> nemwebstore
