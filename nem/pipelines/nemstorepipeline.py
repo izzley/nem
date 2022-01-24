@@ -69,17 +69,20 @@ def unit_scada_generate_facility_scada(
 
         energy = None
 
-        if network == NetworkWEM and power_field and not energy_field:
-            _generated = clean_float(row[power_field])
+        if (
+            network == NetworkWEM
+            and power_field
+            and not energy_field
+            and (_generated := clean_float(row[power_field]))
+        ):
+            energy = str(_generated / 2)
 
-            if _generated:
-                energy = str(_generated / 2)
-
-        if energy_field and energy_field in row:
-            _energy = clean_float(row[energy_field])
-
-            if _energy:
-                energy = float_to_str(_energy)
+        if (
+            energy_field
+            and energy_field in row
+            and (_energy := clean_float(row[energy_field]))
+        ):
+            energy = float_to_str(_energy)
 
         __rec = {
             "created_by": created_by,
@@ -178,20 +181,18 @@ def process_unit_scada(table: Dict[str, Any], spider: Spider) -> Dict:
         raise Exception("Invalid table no records")
 
     records = table["records"]
-    item: Dict[str, Any] = dict()
-
-    item["table_schema"] = FacilityScada
-    item["update_fields"] = ["generated"]
-    item["records"] = unit_scada_generate_facility_scada(
-        records,
-        spider,
-        power_field="SCADAVALUE",
-        network=NetworkNEM,
-        date_format="%Y/%m/%d %H:%M:%S",
-    )
-    item["content"] = ""
-
-    return item
+    return {
+        'table_schema': FacilityScada,
+        'update_fields': ["generated"],
+        'records': unit_scada_generate_facility_scada(
+            records,
+            spider,
+            power_field="SCADAVALUE",
+            network=NetworkNEM,
+            date_format="%Y/%m/%d %H:%M:%S",
+        ),
+        'content': '',
+    }
 
 
 TABLE_PROCESSOR_MAP = {
@@ -217,7 +218,7 @@ class NemwebUnitScadaOpenNEMStorePipeline(object):
                 msg = spider.name
             logger.error("No item in pipeline: {}".format(msg))
             return {}
-        
+
         if "tables" not in item:
             print(item)
             raise Exception("Invalid item - no tables located")
@@ -250,9 +251,7 @@ class NemwebUnitScadaOpenNEMStorePipeline(object):
 
             record_item = None
 
-            record_item = globals()[process_meth](table, spider=spider)
-
-            if record_item:
+            if record_item := globals()[process_meth](table, spider=spider):
                 ret.append(record_item)
 
         return ret

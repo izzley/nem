@@ -36,8 +36,7 @@ def date_series(
     start = min([date_1, date_2])
     end = max([date_1, date_2])
 
-    for dt in rrule(freq=_freq, dtstart=start, until=end):
-        yield dt
+    yield from rrule(freq=_freq, dtstart=start, until=end)
 
 if __name__ == "__main__":
 

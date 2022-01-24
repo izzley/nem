@@ -85,10 +85,12 @@ class MMSArchiveBulkSpider(scrapy.Spider):
 
         content_decoded: str = decode_bytes(content)
 
-        item = {}
-        item["content"] = content_decoded
-        item["extension"] = ".csv"
-        item["mime_type"] = file_mime
+        item = {
+            'content': content_decoded,
+            'extension': '.csv',
+            'mime_type': file_mime,
+        }
+
         # item["log_name"] = re.findall('DATA/(.*).zip', response.url)[0]
 
         yield item

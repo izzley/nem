@@ -31,17 +31,13 @@ def parse_dirlisting(raw_string: str) -> Dict[str, Any]:
     components = [i.strip() for i in components]
     components = list(filter(lambda x: x != "", components))
 
-    _ltype = "dir"
-
     if not components or len(components) < 2:
         logging.debug(components)
         raise Exception(
             "Invalid line string: {}. Components are: {}".format(raw_string, components)
         )
 
-    if is_number(components[1]):
-        _ltype = "file"
-
+    _ltype = "file" if is_number(components[1]) else "dir"
     dt = parse_date(components[0], network=NetworkNEM)
 
     if type(dt) is not datetime:

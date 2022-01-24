@@ -39,21 +39,17 @@ class ExtractCSV(object):
                 # @TODO csv meta stored in table
                 if table["name"] is not None:
                     table_name = table["name"]
-                    print(table['name'])
+                    print(table_name)
                     time.sleep(4)
                     if table_name in item["tables"]:
                         item["tables"][table_name]["records"] += table[
                             "records"
                         ]
-                        print(table_name)
-                        print(item['tables'])
-                        time.sleep(4)
                     else:
                         item["tables"][table_name] = table
-                        print(table_name)
-                        print(item['tables'])
-                        time.sleep(4)
-
+                    print(table_name)
+                    print(item['tables'])
+                    time.sleep(4)
             elif record_type == "I":
                 print("processing record I\n")
                 if table["name"] is not None:
